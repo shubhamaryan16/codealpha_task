@@ -1,1 +1,114 @@
+import java.util.*;
+
+class Destination {
+    private String name;
+    private String startDate;
+    private String endDate;
+    private String preferences;
+    private double estimatedBudget;
+
+    public Destination(String name, String startDate, String endDate, String preferences, double estimatedBudget) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.preferences = preferences;
+        this.estimatedBudget = estimatedBudget;
+    }
+
+    @Override
+    public String toString() {
+        return "Destination: " + name + "\nStart Date: " + startDate + "\nEnd Date: " + endDate + "\nPreferences: " + preferences + "\nEstimated Budget: $" + estimatedBudget;
+    }
+}
+
+class TravelPlanner {
+    private List<Destination> itinerary;
+    private double totalBudget;
+
+    public TravelPlanner() {
+        itinerary = new ArrayList<>();
+        totalBudget = 0.0;
+    }
+
+    public void addDestination(String name, String startDate, String endDate, String preferences, double budget) {
+        Destination destination = new Destination(name, startDate, endDate, preferences, budget);
+        itinerary.add(destination);
+        totalBudget += budget;
+        System.out.println("Destination added successfully!\n" + destination);
+    }
+
+    public void viewItinerary() {
+        if (itinerary.isEmpty()) {
+            System.out.println("No destinations added yet.");
+        } else {
+            System.out.println("Your Travel Itinerary:");
+            for (Destination destination : itinerary) {
+                System.out.println(destination + "\n----------------");
+            }
+            System.out.println("Total Estimated Budget: $" + totalBudget);
+        }
+    }
+
+    public void getWeatherInfo(String destination) {
+        System.out.println("Fetching weather details for " + destination + "... (Feature to be implemented)");
+    }
+
+    public void showMap(String destination) {
+        System.out.println("Displaying map for " + destination + "... (Feature to be implemented)");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        TravelPlanner planner = new TravelPlanner();
+
+        while (true) {
+            System.out.println("\n--- Travel Itinerary Planner ---");
+            System.out.println("1. Add Destination");
+            System.out.println("2. View Itinerary");
+            System.out.println("3. Get Weather Information");
+            System.out.println("4. Show Map");
+            System.out.println("5. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Destination: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter Start Date (YYYY-MM-DD): ");
+                    String startDate = scanner.nextLine();
+                    System.out.print("Enter End Date (YYYY-MM-DD): ");
+                    String endDate = scanner.nextLine();
+                    System.out.print("Enter Preferences (e.g., adventure, sightseeing): ");
+                    String preferences = scanner.nextLine();
+                    System.out.print("Enter Estimated Budget: ");
+                    double budget = scanner.nextDouble();
+                    planner.addDestination(name, startDate, endDate, preferences, budget);
+                    break;
+                case 2:
+                    planner.viewItinerary();
+                    break;
+                case 3:
+                    System.out.print("Enter Destination for Weather Info: ");
+                    String weatherDestination = scanner.nextLine();
+                    planner.getWeatherInfo(weatherDestination);
+                    break;
+                case 4:
+                    System.out.print("Enter Destination for Map: ");
+                    String mapDestination = scanner.nextLine();
+                    planner.showMap(mapDestination);
+                    break;
+                case 5:
+                    System.out.println("Exiting... Safe Travels!");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+}
 
